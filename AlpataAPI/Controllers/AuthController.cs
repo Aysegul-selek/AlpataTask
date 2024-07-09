@@ -17,7 +17,11 @@ namespace WebAPI.Controllers
         {
             _authService = authService;
         }
-
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
@@ -30,29 +34,42 @@ namespace WebAPI.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return View(userForLoginDto);
             }
 
             return BadRequest(result.Message);
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         [HttpPost("register")]
         public ActionResult Register(UserRegisterDto userForRegisterDto)
         {
-            var userExists = _authService.UserExists(userForRegisterDto.Email);
-            if (!userExists.Success)
+            if (ModelState.IsValid)
             {
-                return BadRequest(userExists.Message);
+                var userExists = _authService.UserExists(userForRegisterDto.Email);
+                if (!userExists.Success)
+                {
+                    ModelState.AddModelError(string.Empty, userExists.Message);
+                    return View(userForRegisterDto);
+                }
+
+                var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+                if (registerResult.Success)
+                {
+                    
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, registerResult.Message);
+                }
             }
 
-            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return View(userForRegisterDto);
         }
     }
-}
+    }

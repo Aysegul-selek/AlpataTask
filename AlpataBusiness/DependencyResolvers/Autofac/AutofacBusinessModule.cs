@@ -17,9 +17,10 @@ namespace Business.DependencyResolvers.Autofac
         {
             // Register services and dependencies
             builder.RegisterType<UserManager>().As<IUserService>();
-            builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
-
+            builder.RegisterType<AuthManager>().As<IAuthService>().InstancePerLifetimeScope();
+            //meeting 
+            builder.RegisterType<MeetManager>().As<IMeetingServices>();
             // Register data access layer
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
