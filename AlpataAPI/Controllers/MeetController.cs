@@ -65,5 +65,15 @@ namespace AlpataAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpPost]
+        public async Task<IActionResult> ScheduleMeeting(Meeting model)
+        {
+            // Toplantı planlama işlemleri
+
+            // Toplantı bilgilendirme maili gönderimi
+            await _meetServices.SendMeetingNotification(model.Name, model.Description, model.StartDate);
+            return Ok("Toplantı başarıyla planlandı.");
+            // Diğer işlemler
+        }
     }
 }
