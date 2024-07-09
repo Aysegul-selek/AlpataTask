@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlpataData", "AlpataData\AlpataData.csproj", "{7EBBD0B5-842E-4FC5-BFBF-86A89B15ACFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlpataData", "AlpataData\AlpataData.csproj", "{7EBBD0B5-842E-4FC5-BFBF-86A89B15ACFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlpataCore", "AlpataCore\AlpataCore.csproj", "{9B058D50-62A6-43BF-9AAB-6CDE2CC162BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlpataCore", "AlpataCore\AlpataCore.csproj", "{9B058D50-62A6-43BF-9AAB-6CDE2CC162BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlpataBusiness", "AlpataBusiness\AlpataBusiness.csproj", "{DC7274EA-E12B-4EBA-8A2E-1750690B45EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlpataAPI", "AlpataAPI\AlpataAPI.csproj", "{A00F704C-340D-42FE-B940-4326565E7C2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlpataEntities", "AlpataEntity\AlpataEntities.csproj", "{3D6DE539-D28D-4582-8C81-99211A5CCEEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{9B058D50-62A6-43BF-9AAB-6CDE2CC162BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B058D50-62A6-43BF-9AAB-6CDE2CC162BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B058D50-62A6-43BF-9AAB-6CDE2CC162BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC7274EA-E12B-4EBA-8A2E-1750690B45EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7274EA-E12B-4EBA-8A2E-1750690B45EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7274EA-E12B-4EBA-8A2E-1750690B45EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7274EA-E12B-4EBA-8A2E-1750690B45EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A00F704C-340D-42FE-B940-4326565E7C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A00F704C-340D-42FE-B940-4326565E7C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A00F704C-340D-42FE-B940-4326565E7C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A00F704C-340D-42FE-B940-4326565E7C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6DE539-D28D-4582-8C81-99211A5CCEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6DE539-D28D-4582-8C81-99211A5CCEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6DE539-D28D-4582-8C81-99211A5CCEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6DE539-D28D-4582-8C81-99211A5CCEEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
