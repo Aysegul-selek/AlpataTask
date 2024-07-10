@@ -24,6 +24,8 @@ namespace Business.DependencyResolvers.Autofac
             // Register data access layer
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
+            builder.RegisterType<EmailService>().As<IEmailService>();
+
             // Enable interception for classes that implement interfaces
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly)

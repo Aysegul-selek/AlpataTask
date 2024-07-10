@@ -23,7 +23,6 @@
     <ProjectReference Include="..\AlpataBusiness\AlpataBusiness.csproj" />
     <ProjectReference Include="..\AlpataCore\AlpataCore.csproj" />
     <ProjectReference Include="..\AlpataData\AlpataData.csproj" />
-    <ProjectReference Include="..\AlpataEntity\AlpataEntities.csproj" />
   </ItemGroup>
 
 </Project>

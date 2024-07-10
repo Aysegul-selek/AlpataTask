@@ -10,11 +10,11 @@ namespace AlpataBusiness.Concrete
 {
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
-        public EmailService(IConfiguration configuration)
+        public EmailService()
         {
-            _configuration = configuration;
+            //_configuration = configuration;
         }
 
         public async Task SendWelcomeEmailAsync(string userEmail)

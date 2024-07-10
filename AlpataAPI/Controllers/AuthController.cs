@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    public class AuthController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
         private readonly IEmailService _emailService;
+        private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService, IEmailService emailService)
         {
@@ -16,47 +18,26 @@ namespace WebAPI.Controllers
             _emailService = emailService;
         }
 
-        // GET: /auth/login
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        // POST: /auth/login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
-                ModelState.AddModelError(string.Empty, userToLogin.Message);
-                return View(userForLoginDto);
+                return BadRequest(userToLogin.Message);
             }
 
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                // Örneğin token veya kullanıcı bilgileri ile birlikte yönlendirme yapabilirsiniz
-                return RedirectToAction("Index", "Home");
+                return Ok(result); // Örneğin başarılı olursa kullanıcı bilgileri ile birlikte dönüş yapabilirsiniz
             }
 
-            ModelState.AddModelError(string.Empty, result.Message);
-            return View(userForLoginDto);
+            return BadRequest(result.Message);
         }
 
-        // GET: /auth/register
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        // POST: /auth/register
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(UserRegisterDto userForRegisterDto)
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterAsync(UserRegisterDto userForRegisterDto)
         {
             if (ModelState.IsValid)
             {
@@ -64,14 +45,14 @@ namespace WebAPI.Controllers
                 if (!userExists.Success)
                 {
                     ModelState.AddModelError(string.Empty, userExists.Message);
-                    return View(userForRegisterDto);
+                    return BadRequest(ModelState);
                 }
 
                 var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
                 if (registerResult.Success)
                 {
                     await _emailService.SendWelcomeEmailAsync(userForRegisterDto.Email);
-                    return RedirectToAction("Login");
+                    return Ok(registerResult); // Örneğin başarılı kayıt olursa bir dönüş yapabilirsiniz
                 }
                 else
                 {
@@ -79,27 +60,7 @@ namespace WebAPI.Controllers
                 }
             }
 
-            return View(userForRegisterDto);
+            return BadRequest(ModelState);
         }
-
-        // POST: /auth/logout
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Logout()
-        {
-            // Oturumu sonlandırma işlemleri
-            // Örneğin, JWT token tabanlı oturumu sonlandırabilirsiniz
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        // GET: /auth/resetpassword
-        [HttpGet]
-        public IActionResult ResetPassword()
-        {
-            return View();
-        }
-
-     
     }
 }
