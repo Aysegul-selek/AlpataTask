@@ -30,12 +30,11 @@ namespace WebAPI.Controllers
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                return Ok(result); // Örneğin başarılı olursa kullanıcı bilgileri ile birlikte dönüş yapabilirsiniz
+                return Ok(result); 
             }
 
             return BadRequest(result.Message);
         }
-
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(UserRegisterDto userForRegisterDto)
         {
@@ -44,7 +43,7 @@ namespace WebAPI.Controllers
                 var userExists = _authService.UserExists(userForRegisterDto.Email);
                 if (!userExists.Success)
                 {
-                    ModelState.AddModelError(string.Empty, userExists.Message);
+                    ModelState.AddModelError(string.Empty, "User with this email already exists."); // Örnek bir hata mesajı
                     return BadRequest(ModelState);
                 }
 
@@ -52,15 +51,16 @@ namespace WebAPI.Controllers
                 if (registerResult.Success)
                 {
                     await _emailService.SendWelcomeEmailAsync(userForRegisterDto.Email);
-                    return Ok(registerResult); // Örneğin başarılı kayıt olursa bir dönüş yapabilirsiniz
+                    return Ok(registerResult);
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, registerResult.Message);
+                    ModelState.AddModelError(string.Empty, "Failed to register user."); // Örnek bir hata mesajı
                 }
             }
 
             return BadRequest(ModelState);
         }
+
     }
 }

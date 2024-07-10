@@ -8,6 +8,7 @@ using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using AlpataBusiness.Concrete;
+using AlpataData.Concrete;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -21,6 +22,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>().InstancePerLifetimeScope();
             //meeting 
             builder.RegisterType<MeetManager>().As<IMeetingServices>();
+            builder.RegisterType<EfMeetingDal>().As<IMeetingDal>();
             // Register data access layer
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
@@ -34,6 +36,8 @@ namespace Business.DependencyResolvers.Autofac
 
             // Register the interceptor selector
             builder.RegisterType<AspectInterceptorSelector>().As<IInterceptorSelector>().SingleInstance();
+         
+
         }
     }
 }

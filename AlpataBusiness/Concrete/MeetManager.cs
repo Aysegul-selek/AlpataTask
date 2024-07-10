@@ -2,27 +2,20 @@
 using AlpataData.Abstract;
 using AlpataEntities.Concrete;
 using Business.Constants;
-using Castle.Core.Configuration;
 using Core.Utilities.Results;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlpataBusiness.Concrete
 {
     public class MeetManager : IMeetingServices
     {
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
         IMeetingDal _meetingDal;
 
-        public MeetManager(IMeetingDal meetingDal, IConfiguration configuration)
+        public MeetManager(IMeetingDal meetingDal)
         {
             _meetingDal = meetingDal;
-            _configuration = configuration;
+          //  _configuration = configuration;
         }
 
         public IResult Add(Meeting meet)
@@ -48,7 +41,7 @@ namespace AlpataBusiness.Concrete
             return new SuccessDataResult<Meeting>(_meetingDal.Get(p => p.Id == id));
         }
 
-        public Task SendMeetingNotification(string userEmail, string meetingSubject, DateTime meetingTime)
+        public Task SendMeetingNotification(string name, string description, string StartDate)
         {
             throw new NotImplementedException();
         }

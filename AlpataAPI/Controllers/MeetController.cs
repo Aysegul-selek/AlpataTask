@@ -1,7 +1,6 @@
 ﻿using AlpataBusiness.Abstract;
 using AlpataEntities.Concrete;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Drawing2D;
 
 namespace AlpataAPI.Controllers
 {

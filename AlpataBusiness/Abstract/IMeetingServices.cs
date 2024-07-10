@@ -10,6 +10,6 @@ namespace AlpataBusiness.Abstract
         IResult Update(Meeting meet);
         IResult Delete(Meeting meet);
         IResult Add(Meeting meet);
-        Task SendMeetingNotification(string name, string description, DateTime StartDate);
+        Task SendMeetingNotification(string name, string description, string StartDate);
     }
 }

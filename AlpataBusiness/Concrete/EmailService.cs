@@ -1,37 +1,43 @@
-﻿// EmailService.cs
-
-using AlpataAPI.Models;
+﻿using AlpataAPI.Models;
 using AlpataBusiness.Abstract;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 public class EmailService : IEmailService
 {
-    private readonly SendGridSettings _sendGridSettings;
+    private readonly EmailSettings _emailSettings;
 
-    public EmailService(IOptions<SendGridSettings> sendGridSettings)
+    public EmailService(IOptions<EmailSettings> emailSettings)
     {
-        _sendGridSettings = sendGridSettings.Value;
+        _emailSettings = emailSettings.Value;
     }
 
-    public async Task SendWelcomeEmailAsync(string userEmail)
+    public async Task SendWelcomeEmailAsync(string email)
     {
-        string subject = "Hoş Geldiniz!";
-        string body = $"Merhaba, {userEmail}, uygulamamıza hoş geldiniz!";
-
-        var client = new SendGridClient(_sendGridSettings.ApiKey);
-        var msg = new SendGridMessage()
+        if (_emailSettings.SmtpPort <= 0)
         {
-            From = new EmailAddress(_sendGridSettings.FromEmail, _sendGridSettings.FromName),
-            Subject = subject,
-            PlainTextContent = body,
-            HtmlContent = $"<strong>{body}</strong>",
-        };
-        msg.AddTo(new EmailAddress(userEmail));
+            throw new ArgumentOutOfRangeException(nameof(_emailSettings.SmtpPort), "SMTP port must be a positive number.");
+        }
 
-        var response = await client.SendEmailAsync(msg);
-        // Email gönderme işlemi sonucunu kontrol edebilirsiniz
+        var smtpClient = new SmtpClient(_emailSettings.SmtpServer)
+        {
+            Port = _emailSettings.SmtpPort,
+            Credentials = new NetworkCredential(_emailSettings.SenderEmail, _emailSettings.SenderPassword),
+            EnableSsl = true,
+        };
+
+        var mailMessage = new MailMessage
+        {
+            From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
+            Subject = "Welcome to Our Service",
+            Body = "Thank you for registering with our service!",
+            IsBodyHtml = true,
+        };
+
+        mailMessage.To.Add(email);
+
+        await smtpClient.SendMailAsync(mailMessage);
     }
 }

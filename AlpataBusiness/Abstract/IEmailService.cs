@@ -8,6 +8,6 @@ namespace AlpataBusiness.Abstract
 {
     public interface IEmailService
     {
-        Task SendWelcomeEmailAsync(string userEmail);
+        Task SendWelcomeEmailAsync(string email);
     }
 }

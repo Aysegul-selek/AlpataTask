@@ -17,13 +17,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Use Autofac as the DI container
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+var configuration = builder.Configuration;
+
+
+builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule(new AutofacBusinessModule());
 });
 
 // Configuration
-var configuration = builder.Configuration;
+
 
 // Add services to the container
 builder.Services.AddControllers();
