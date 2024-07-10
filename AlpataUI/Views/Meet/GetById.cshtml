@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "GetById";
+}
+
+@model AlpataEntities.Concrete.Meeting
+
+<h1>Meeting Details</h1>
+
+<div>
+    <h4>Name: @Model.Name</h4>
+    <p>Description: @Model.Description</p>
+    <p>Start Date: @Model.StartDate.ToShortDateString()</p>
+</div>
+
+

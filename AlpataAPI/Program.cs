@@ -7,10 +7,8 @@ using Core.Utilities.IoC;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Core.Extensions; // Adjust this to the actual namespace where MiddlewareExtensions is located
+
 
 var builder = WebApplication.CreateBuilder(args);
 

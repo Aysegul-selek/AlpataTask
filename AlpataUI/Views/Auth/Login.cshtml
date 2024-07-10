@@ -1,0 +1,22 @@
+﻿@model LoginViewModel
+
+<h1>Login</h1>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p>@ViewData["ErrorMessage"]</p>
+}
+
+<form asp-action="Login" method="post">
+    <div>
+        <label asp-for="Username">Username:</label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
+    </div>
+    <div>
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <button type="submit">Login</button>
+</form>
