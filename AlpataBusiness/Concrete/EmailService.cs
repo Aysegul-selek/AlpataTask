@@ -1,47 +1,37 @@
-﻿using AlpataBusiness.Abstract;
-using Castle.Core.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// EmailService.cs
+
+using AlpataAPI.Models;
+using AlpataBusiness.Abstract;
+using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
-namespace AlpataBusiness.Concrete
+public class EmailService : IEmailService
 {
-    public class EmailService : IEmailService
+    private readonly SendGridSettings _sendGridSettings;
+
+    public EmailService(IOptions<SendGridSettings> sendGridSettings)
     {
-        //private readonly IConfiguration _configuration;
-
-        public EmailService()
-        {
-            //_configuration = configuration;
-        }
-
-        public async Task SendWelcomeEmailAsync(string userEmail)
-        {
-            // Email gönderme işlemi burada gerçekleştirilecek
-            // Örnek SMTP veya e-posta servisini kullanarak gönderim yapabilirsiniz
-            // Örneğin:
-            string subject = "Hoş Geldiniz!";
-            string body = $"Merhaba, {userEmail}, uygulamamıza hoş geldiniz!";
-
-            // Email gönderme kodu buraya eklenecek
-
-            // Örneğin, SendGrid, SMTP veya başka bir e-posta servisi kullanabilirsiniz
-            // Örnek SendGrid kullanımı:
-            /*
-            var apiKey = _configuration["SendGrid:ApiKey"];
-            var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("your-email@example.com", "Your Name"),
-                Subject = subject,
-                PlainTextContent = body,
-                HtmlContent = $"<strong>{body}</strong>",
-            };
-            msg.AddTo(new EmailAddress(userEmail));
-            var response = await client.SendEmailAsync(msg);
-            */
-        }
+        _sendGridSettings = sendGridSettings.Value;
     }
+
+    public async Task SendWelcomeEmailAsync(string userEmail)
+    {
+        string subject = "Hoş Geldiniz!";
+        string body = $"Merhaba, {userEmail}, uygulamamıza hoş geldiniz!";
+
+        var client = new SendGridClient(_sendGridSettings.ApiKey);
+        var msg = new SendGridMessage()
+        {
+            From = new EmailAddress(_sendGridSettings.FromEmail, _sendGridSettings.FromName),
+            Subject = subject,
+            PlainTextContent = body,
+            HtmlContent = $"<strong>{body}</strong>",
+        };
+        msg.AddTo(new EmailAddress(userEmail));
+
+        var response = await client.SendEmailAsync(msg);
+        // Email gönderme işlemi sonucunu kontrol edebilirsiniz
     }
+}

@@ -1,4 +1,6 @@
+using AlpataAPI.Models;
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
 using Core.DependencyResolvers;
@@ -8,6 +10,7 @@ using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +52,7 @@ builder.Services.AddDependencyResolvers(new ICoreModule[]
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid"));
 
 var app = builder.Build();
 
